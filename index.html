@@ -17,10 +17,29 @@
     </head>
     <body>
         <canvas id="id-canvas" width="400" height="300"></canvas>
-        jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-        再次试一下是怎么添加进来的
-        
+
+
     </body>
-    <script src="js/main.js"></script>
+    <script >
+    const ajax = (request) => {
+        let r = new XMLHttpRequest()
+        r.open('post', request.url, true)
+        r.responseType = 'arrayBuffer'
+        r.send()
+        r.onreadystatechange = (event) => {
+            if (r.readyState == 4) {
+                request.callback(r.response)
+            }
+        }
+    }
+    let request = {
+        url: 'a.txt',
+        callbcak(r) {
+            console.log(r);
+            console.log(r.toString());
+        },
+    }
+    ajax(request)
+    </script>
 
 </html>
