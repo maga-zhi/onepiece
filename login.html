@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>登录界面</title>
+
+        <style async media="screen">
+            *{
+                margin: 0 auto;
+                padding: 0;
+                /* font: ; */
+                font-size: 24px;
+            }
+            body{
+                background-image: url("http://img1.ph.126.net/siGNLDlOmunPkNNGh7NIuA==/2835860390377430782.jpg");
+            }
+
+            #login-interface{
+                /* display: inline-block; */
+                width: 400px;
+                height: 300px;
+                margin-top: 200px;
+                padding-top: 30px;
+                /* background-image: url(); */
+                background-color: rgba(250, 255, 255, 0.4);
+            }
+            #login-interface>*{
+                /* margin: 0 auto; */
+                display: block;
+                width: 200px;
+                margin-top: 30px;
+                /* align: right; */
+
+            }
+            #login-interface>button{
+                /* width: 20px; */
+                height: 30px;
+                font-size: 12px;
+                /* align: right; */
+            }
+        </style>
+        <script>
+            const login = (n) => {
+            }
+            console.log(screen.width);
+        </script>
+
+    </head>
+    <body>
+        <div id="login-interface">
+            <input type="text" name="" id="user">
+            <input type="text" name="" id="pass">
+            <button id="login-botton">登录</button>
+            <button id="reg-botton">注册</button>
+        </div>
+        <!-- <img async src="http://img1.ph.126.net/b9bikslPmnDA0mKNH93NSA==/6619440430235233504.jpg" alt=""> -->
+
+    </body>
+    <script>
+    let e = sel => document.querySelector(sel)
+    const ajax = (request) => {
+        let r = new XMLHttpRequest()
+        r.open('post', request.url, true)
+        r.responseType = request.responseType
+        r.send()
+        r.onreadystatechange = (event) => {
+            if (r.readyState == 4) {
+                request.callback(r.response)
+            }
+        }
+    }
+    e('#login-botton').addEventListener('click', event => {
+        let user = e('#user').value
+        let pass = e('#pass').value
+        // console.log('k', user);
+        let request = {
+            url: 'users.json',
+            responseType: 'json',
+            callback(r) {
+                if (r[user]) {
+                    if (pass == r[user]) {
+                        console.log('登录成功');
+                    } else {
+                        console.log('密码错误');
+                    }
+                } else {
+                    console.log('用户不存在');
+                }
+            },
+        }
+        ajax(request)
+
+    })
+    e('#reg-botton').addEventListener('click', event => {
+        let user = e('#user').value
+        let pass = e('#pass').value
+        // console.log('k', user);
+        let request = {
+            url: 'users.json',
+            responseType: 'json',
+            callback(r) {
+                if (r[user]) {
+                    console.log('用户已经注册');
+                } else {
+                    // r[user] = pass
+                    console.log('注册成功');
+                }
+            },
+        }
+        ajax(request)
+    })
+    // let x = window.open('a.txt')
+    </script>
+
+</html>

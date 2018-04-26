@@ -4,27 +4,144 @@
         <meta charset="utf-8">
         <title></title>
         <style>
-            #id-canvas{border: 1px solid black;}
+            #id-canvas{
+
+                width: 100%;
+                height: 300px;
+                /* position: relative; */
+                /* display:inline-block; */
+                border: 1px solid black;
+                /* font:italic bold 12px/30px arial,sans-serif; */
+                /* background-color: rgb(255,0,0); */
+            }
+            #id-canvas>div{
+                position: relative;
+                display: inline-block;
+                /* vertical-align: text-bottom; */
+                /* vertical-align: top; */
+                vertical-align: top;
+            }
+            #id-canvas canvas{border: 1px solid black;}
+            button{
+                width: 90px;
+                height: 30px;
+                background: #ffffff;
+                Color: #000000;
+            }
+            button:active{
+                /* width: 90px;
+                height: 30px; */
+                background: #555555;
+                /* Color: #555555; */
+            }
         </style>
-        <script src="js/utils.js"></script>
+        <!-- <script src="js/utils.js"></script>
         <script src="js/config/loadImg.js"></script>
 
         <script src="js/game.js"></script>
         <script src="js/eve.js"></script>
         <script src="js/element/paddle.js"></script>
         <script src="js/element/ball.js"></script>
-        <script src="js/element/block.js"></script>
+        <script src="js/element/block.js"></script> -->
     </head>
     <body>
-        <canvas id="id-canvas" width="400" height="300"></canvas>
-
+        <div id="id-canvas" >
+            <canvas width="400" height="300"></canvas>
+            <!-- <canvas id="id-canvas" data-canvas_size></canvas> -->
+            <div class="pi-canvas-size">
+                <input type="text" name="width" value="400" size='3'>
+                <input type="text" name="height" value="300" size='3'>
+                <div>
+                    <button data-action='change_size' data-canvas_width='-100'>减少</button>
+                    宽度
+                    <button data-action='change_size' data-canvas_width='100'>增加</button>
+                </div>
+                <div>
+                    <button data-action='change_size' data-canvas_height='-100'>减少</button>
+                    高度
+                    <button data-action='change_size' data-canvas_height='100'>增加</button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="button" width="10" height="10">asd</div> -->
+        <!-- <div class="pi-canvas-size">
+            <div>
+                <button data-canvas_width='100'>减少</button>
+                111
+                <button data-canvas_width='-100'>增加</button>
+            </div>
+            <div>
+                <button data-canvas_height='100'>减少</button>
+                 222
+                <button data-canvas_height='-100'>增加</button>
+            </div> -->
+        </div>
 
     </body>
+    <script>
+        let e = sel => document.querySelector(sel)
+        let eAll = sel => document.querySelectorAll(sel)
+
+    </script>
+    <script>
+    // let botton = eAll('button')let
+    canvas = e('#id-canvas canvas')
+    // canvas.style.width = '400px'
+    let button_size = eAll('.pi-canvas-size button')
+    // console.log(button_size);
+    const bindEvent = () => {
+        let canvas_size = e('.pi-canvas-size')
+
+        let botton = eAll('#id-canvas>button')
+        button_size.forEach((item) => {
+            item.addEventListener('click', (event) => {
+                let target = event.target
+                let h = target.dataset.canvas_height
+                let w = target.dataset.canvas_width
+                if (h) {
+                    h = parseInt(h)
+                    canvas.height += h
+                }
+                if (w) {
+                    w = parseInt(w)
+                    canvas.width += w
+                }
+                // console.log(canvas.height);
+
+            })
+        })
+        // canvas_size.addEventListener('click', (event) => {
+        //     let target = event.target
+        //     // console.log(target.dataset.action);
+        //     // console.log(target);
+        //     if (target.dataset.action == 'change_size') {
+        //         let w = target.dataset.canvas_width
+        //         let h = target.dataset.canvas_height
+        //         w = parseInt(w)
+        //         h = parseInt(h)
+        //         // eval(canvas.width += w)
+        //         canvas.width += w
+        //         canvas.height += h
+        //         console.log(w);
+        //         console.log(canvas.width, 'kkk');
+        //
+        //     }
+        //     // console.log(canvas);
+        //     // console.log(w, canvas.style.width);
+        // })
+
+    }
+    bindEvent()
+    // eAll('.pi-canvas-size button').addEventListener('click', (event) => {
+    //     console.log(event);
+    // })
+
+    </script>
     <script >
     const ajax = (request) => {
         let r = new XMLHttpRequest()
         r.open('post', request.url, true)
-        r.responseType = 'arraybuffer'
+        r.responseType = request.responseType
         r.send()
         r.onreadystatechange = (event) => {
             if (r.readyState == 4) {
@@ -34,9 +151,11 @@
     }
     let request = {
         url: 'a.txt',
+        responseType: 'arraybuffer',
         callback(r) {
-            console.log(r);
-            console.log(r.toString());
+            let data = new Uint8Array(r)
+            console.log(data);
+            // console.log(r.toString());
         },
     }
     ajax(request)
