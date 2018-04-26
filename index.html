@@ -24,7 +24,7 @@
     const ajax = (request) => {
         let r = new XMLHttpRequest()
         r.open('post', request.url, true)
-        r.responseType = 'arrayBuffer'
+        r.responseType = 'arraybuffer'
         r.send()
         r.onreadystatechange = (event) => {
             if (r.readyState == 4) {
