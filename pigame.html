@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            #id-canvas{
+                border: 1px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="id-canvas" width="400" height="400"></canvas>
+    </body>
+    <script describe='utils'>
+    const e = sel => document.querySelector(sel)
+    const randomBetween = (n, m) => Math.floor((m - n) * Math.random()) + n + 1
+    // console.log(randomBetween(3, 6));
+    </script>
+    <script describe='config'>
+        const Config = {
+            particle: {
+                amount: randomBetween(3,8),
+            }
+        }
+    </script>
+    <script describe='Particle'>
+    class Particle {
+        constructor() {
+            this.color = '#FF0000'
+            this.x = null
+            this.y = null
+            this.size = 10
+            // this.amount = null
+            this.speedX = null
+            this.speedY = null
+            this.hp = 10
+            this.alive = true
+        }
+        display() {
+            if (this.alive) {
+                let t = this
+                context.fillStyle = this.color
+                // rect(t.x, t.y)
+                context.fillRect(t.x, t.y, t.x + this.size, t.y + this.size)
+                // console.log(t.x + this.size, t.y + this.size);
+            }
+        }
+        die() {
+            this.alive = false
+        }
+    }
+    </script>
+    <script describe='ParticleSys'>
+    class ParticleSys {
+        constructor() {
+            this.amount = Config.particle.amount
+            this.produce()
+        }
+        produce() {
+            this.ParticleItem = []
+            for (let i = 0; i < this.amount; i++) {
+                // this.amount[i]
+                let p = new Particle()
+                p.x = randomBetween(0,200)
+                p.y = randomBetween(0,200)
+                // console.log(p,'2');
+                // p.
+                this.ParticleItem.push(p)
+            }
+            // console.log(this.ParticleItem);
+        }
+        fire() {
+            let t = this
+            // console.log(t.ParticleItem);
+            for (let i = 0; i < t.ParticleItem.length; i++) {
+                let p = t.ParticleItem[i]
+                // console.log(p);
+                p.display()
+            }
+        }
+    }
+    </script>
+    <script>
+
+
+    canvas = e('#id-canvas')
+    context = canvas.getContext('2d')
+
+
+    // let x = 100
+    // let y = 100
+    let particle = new ParticleSys()
+    // particle.die()
+    // delete particle
+    // console.log(particle.size);
+    // context.fillStyle = '#FF0000'
+    // // context.fillRect(0, 0, 1, 1)
+    // context.fillRect(x, y, 100, 100)
+    let iii = false
+    canvas.addEventListener('click', event => {
+        iii = true
+    })
+    setInterval(() => {
+        // x += 1
+        // context.fillStyle = '#FF0000'
+        // context.fillRect(x, y, 100, 100)
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        // context.fillRect(x, y, 100, 100)
+        if (iii) {
+            particle.fire()
+        }
+
+    }, 1000/30)
+
+    // context.fillStyle = '#EE2200'
+    // context.fillRect(110, 110, 100, 100)
+    // let image = new Image()
+    // image.src = ''
+
+
+    </script>
+</html>

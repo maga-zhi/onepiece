@@ -84,9 +84,9 @@
         let eAll = sel => document.querySelectorAll(sel)
 
     </script>
-    <script>
+    <script key="canvas">
     // let botton = eAll('button')let
-    canvas = e('#id-canvas canvas')
+    let canvas = e('#id-canvas canvas')
     // canvas.style.width = '400px'
     let button_size = eAll('.pi-canvas-size button')
     // console.log(button_size);
@@ -136,6 +136,13 @@
     // eAll('.pi-canvas-size button').addEventListener('click', (event) => {
     //     console.log(event);
     // })
+    canvas.addEventListener('click', event => {
+        console.log(event);
+        let x = event.offsetX
+        if (x < ) {
+
+        }
+    })
 
     </script>
     <script >
